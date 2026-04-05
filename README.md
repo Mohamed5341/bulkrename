@@ -3,7 +3,7 @@ A python script that renames multiple files using a specific format.
 
 ---
 # Features
-- [ ] Basic rename files (just add name and numbers).
+- [x] Basic rename files (just add name and numbers).
 - [ ] Preview before execution.
 - [ ] Rollback changes.
 - [ ] Modify specific files with certain filters.
