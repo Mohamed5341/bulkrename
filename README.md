@@ -4,7 +4,7 @@ A python script that renames multiple files using a specific format.
 ---
 # Features
 - [x] Basic rename files (just add name and numbers).
-- [ ] Preview before execution.
+- [x] Preview before execution.
 - [ ] Rollback changes.
 - [ ] Modify specific files with certain filters.
 - [ ] Use excel file for taking user names map.

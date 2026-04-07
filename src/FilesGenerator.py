@@ -5,7 +5,7 @@ N = 100
 destination = Path.cwd() / 'examples' / 'samples'
 
 if not destination.exists():
-    destination.mkdir()
+    destination.mkdir(parents=True)
 
 names_list = ['project', 'main', 'final', 'copy']
 seperators = ['_', '-', ' ', '']
