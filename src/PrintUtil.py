@@ -1,3 +1,5 @@
+from pathlib import Path
+
 def PrintTabular(titles, table, seperator='->'):
     lenths = [0]*len(titles)
     for row in table:
@@ -22,10 +24,15 @@ def PrintTabular(titles, table, seperator='->'):
     
     print(result)
 
-def PrintFilesTable(data):
+def PrintFilesTable(data, reverse = False):
     titles = ['Before', 'After']
     names = []
-    for before, after in data:
+    sep = '->'
+    for item in data:
+        before = Path(item["old"])
+        after = Path(item["new"])
         names.append((before.name, after.name))
     
-    PrintTabular(titles, names, seperator='->')
+    if reverse:
+        sep = '<-'
+    PrintTabular(titles, names, seperator=sep)
