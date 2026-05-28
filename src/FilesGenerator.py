@@ -18,7 +18,7 @@ for i in range(N):
     j = 0
     while file_path.exists():
         j += 1
-        file_path = destination / (filename + f'({j}).txt')
+        file_path = destination / (filename + f'({j}).{random.choice(['txt', 'csv', 'pdf'])}')
     
     with open(file_path, 'w', encoding='utf-8') as f:
         file_path.write_text(filename)

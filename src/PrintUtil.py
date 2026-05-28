@@ -25,6 +25,9 @@ def PrintTabular(titles, table, seperator='->'):
     print(result)
 
 def PrintFilesTable(data, reverse = False):
+    if len(data) == 0:
+        print("No files to modify")
+        return
     titles = ['Before', 'After']
     names = []
     sep = '->'
