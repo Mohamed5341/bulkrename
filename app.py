@@ -2,10 +2,14 @@ import sys
 from pathlib import Path
 from src.PrintUtil import PrintFilesTable
 import json, os
+import ctypes
 
 prefix = 'Invoice'
 working_folder = Path.cwd() / 'examples' / 'samples'
-history_filename = Path.cwd() / "history.json"
+if os.name == 'nt':
+    history_filename = Path.cwd() / "history.json"
+else:
+    history_filename = Path.cwd() / ".history.json"
 
 if not working_folder.exists():
     print("Folder doesn't exist")
@@ -13,6 +17,7 @@ if not working_folder.exists():
 
 counter = 0
 names_list = []
+history_exists = False
 
 for file in working_folder.iterdir():
     new_name = file.parent / f"{prefix}_{str(counter).zfill(3)}{file.suffix}"
@@ -25,6 +30,7 @@ PrintFilesTable(names_list)
 while True:
     if history_filename.exists():
         user_input = input("\n\nEnter yes/y to confirm, r to rollback(q for quit): ")
+        history_exists = True
     else:
         user_input = input("\n\nEnter yes/y to confirm(q for quit): ")
 
@@ -61,4 +67,11 @@ while True:
     elif user_input.lower() == 'q' or user_input.lower() == 'quit':
         print("\n\nFiles unchanged.")
         break
-        
+
+
+# Hide my changes folder
+if os.name == 'nt' and not history_exists:
+    FILE_ATTRIBUTE_HIDDEN = 0x02
+    ret = ctypes.windll.kernel32.SetFileAttributesW(str(history_filename), FILE_ATTRIBUTE_HIDDEN)
+    if not ret:
+        print("Failed to hide the file.")
