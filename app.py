@@ -1,12 +1,14 @@
 import sys
 from pathlib import Path
 from src.PrintUtil import PrintFilesTable
+from datetime import datetime
 import json, os
 import ctypes
+import csv
 
 #--------------------------------------------------------
 prefix = 'Invoice'
-folders_selector = "copy*.*"
+folders_selector = "*"
 working_folder = Path.cwd() / 'examples' / 'samples'
 if os.name == 'nt':
     history_filename = Path.cwd() / "history.json"
@@ -23,10 +25,20 @@ names_list = []
 history_exists = False
 
 files_list = working_folder.glob(folders_selector)
+
+# write files data to a CSV file
+user_defined_file = open("files.csv", 'w', newline='')
+user_defined_file_writer = csv.writer(user_defined_file)
+user_defined_file_writer.writerow(["Name", "Extension", "Size(bytes)", "Modify Time", "Create Time", "Modified Name"])
 for file in files_list:
     new_name = file.parent / f"{prefix}_{str(counter).zfill(3)}{file.suffix}"
     names_list.append({"old": str(file.absolute()) ,"new": str(new_name.absolute())})
     counter += 1
+
+    stats = file.stat()
+    user_defined_file_writer.writerow([file.name, file.suffix, stats.st_size, datetime.fromtimestamp(stats.st_mtime), datetime.fromtimestamp(stats.st_ctime), new_name.name])
+
+user_defined_file.close()
 
 print("List of files to rename:")
 PrintFilesTable(names_list)
