@@ -46,10 +46,10 @@ PrintFilesTable(names_list)
 #--------------------------------------------------------
 while True:
     if history_filename.exists():
-        user_input = input("\n\nEnter yes/y to confirm, r to rollback(q for quit): ")
+        user_input = input("\n\nEnter yes/y to confirm, l to use CSV, r to rollback(q for quit): ")
         history_exists = True
     else:
-        user_input = input("\n\nEnter yes/y to confirm(q for quit): ")
+        user_input = input("\n\nEnter yes/y to confirm, l to use CSV(q for quit): ")
         if counter == 0:
             sys.exit()
 
@@ -82,6 +82,14 @@ while True:
         
         os.remove(history_filename)
         print("Done")
+        break
+    elif user_input.lower() == 'l' and Path("files.csv").exists():
+        csv_file = open("files.csv")
+        files_data = csv.DictReader(csv_file)
+        for item in files_data:
+            before = working_folder / item["Name"]
+            after = working_folder / item["Modified Name"]
+            before.rename(after)
         break
     elif user_input.lower() == 'q' or user_input.lower() == 'quit':
         print("\n\nFiles unchanged.")

@@ -7,6 +7,5 @@ A python script that renames multiple files using a specific format.
 - [x] Preview before execution.
 - [x] Rollback changes.
 - [x] Modify specific files with certain filters.
-- [ ] Use excel file for taking user names map.
-- [ ] Rename based on dates of creation or modification.
+- [x] Use CSV file for taking user names map.
 - [ ] Create GUI.
